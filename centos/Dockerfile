@@ -44,11 +44,15 @@ ARG RBENV_TAG=c8ba27fd07e4bf3c444df301e5fb2a5fcdacaf9d
 # update git fetch to include --jobs $(nproc) when newer git versions land
 RUN cd "${RBENV_ROOT}" \
     && (git checkout -q -f "${RBENV_TAG}" 2> /dev/null \
-    || ((git fetch -q --prune --depth 1 origin tag "${RBENV_TAG}" \
-         || (git fetch -q origin "${RBENV_TAG}" \
-             || git fetch -q origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV_TAG}")) \
+        || ((git fetch -q --prune --depth 1 origin tag "${RBENV_TAG}" \
+             || (git fetch -q origin "${RBENV_TAG}" \
+                 || git fetch -q origin "+refs/heads/*:refs/remotes/origin/*")) \
+             && git checkout -q -f "${RBENV_TAG}")) \
     && echo "Ignore git errors (if any) just above."
+    # Unshallowing a repo is broken in git 1.8.3.1 used by centos 7, tough luck
+    #         && (git checkout -q -f "${RBENV_TAG}" \
+    #             || (git fetch -q --unshallow \
+    #                 && git checkout -q -f "${RBENV_TAG}")))) \
 
 ARG RBENV_RUBYBUILD_TAG=v20180424
 RUN cd "${RBENV_RUBYBUILD_ROOT}" \
@@ -56,8 +60,12 @@ RUN cd "${RBENV_RUBYBUILD_ROOT}" \
     || ((git fetch -q --prune --depth 1 origin tag "${RBENV_RUBYBUILD_TAG}" \
          || (git fetch -q origin "${RBENV_RUBYBUILD_TAG}" \
              || git fetch -q origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV_RUBYBUILD_TAG}")) \
+             && git checkout -q -f "${RBENV_RUBYBUILD_TAG}")) \
     && echo "Ignore git errors (if any) just above."
+    # Unshallowing a repo is broken in git 1.8.3.1 used by centos 7, tough luck
+    #         && (git checkout -q -f "${RBENV_RUBYBUILD_TAG}" \
+    #             || (git fetch -q --unshallow \
+    #                 && git checkout -q -f "${RBENV_RUBYBUILD_TAG}")))) \
 
 RUN sudo yum update -y
 RUN cd "${RBENV_ROOT}" && src/configure && make -C src || true
@@ -85,8 +93,12 @@ RUN cd "${RBENV4CI_ROOT}/src" \
     || ((git fetch -q --prune --depth 1 origin tag "${RBENV4CI_TAG}" \
          || (git fetch -q origin "${RBENV4CI_TAG}" \
              || git fetch -q origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV4CI_TAG}")) \
+             && git checkout -q -f "${RBENV4CI_TAG}")) \
     && echo "Ignore git errors (if any) just above."
+    # Unshallowing a repo is broken in git 1.8.3.1 used by centos 7, tough luck
+    #         && (git checkout -q -f "${RBENV4CI_TAG}" \
+    #             || (git fetch -q --unshallow \
+    #                 && git checkout -q -f "${RBENV4CI_TAG}")))) \
 
 RUN cd "${RBENV4CI_ROOT}/src" \
     && ./autogen.sh \

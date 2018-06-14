@@ -41,7 +41,9 @@ RUN cd "${RBENV_ROOT}" \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV_TAG}" \
          || (git fetch -q --jobs $(nproc) origin "${RBENV_TAG}" \
              || git fetch -q --jobs $(nproc) origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV_TAG}")) \
+             && (git checkout -q -f "${RBENV_TAG}" \
+                 || (git fetch -q --jobs $(nproc) --unshallow \
+                     && git checkout -q -f "${RBENV_TAG}")))) \
     && echo "Ignore git errors (if any) just above."
 
 ARG RBENV_RUBYBUILD_TAG=v20180424
@@ -50,7 +52,9 @@ RUN cd "${RBENV_RUBYBUILD_ROOT}" \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV_RUBYBUILD_TAG}" \
          || (git fetch -q --jobs $(nproc) origin "${RBENV_RUBYBUILD_TAG}" \
              || git fetch -q --jobs $(nproc) origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV_RUBYBUILD_TAG}")) \
+             && (git checkout -q -f "${RBENV_RUBYBUILD_TAG}" \
+                 || (git fetch -q --jobs $(nproc) --unshallow \
+                     && git checkout -q -f "${RBENV_RUBYBUILD_TAG}")))) \
     && echo "Ignore git errors (if any) just above."
 
 RUN cd "${RBENV_ROOT}" && src/configure && make -C src || true
@@ -80,7 +84,9 @@ RUN cd "${RBENV4CI_ROOT}/src" \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV4CI_TAG}" \
          || (git fetch -q --jobs $(nproc) origin "${RBENV4CI_TAG}" \
              || git fetch -q --jobs $(nproc) origin +refs/heads/*:refs/remotes/origin/*)) \
-         && git checkout -q -f "${RBENV4CI_TAG}")) \
+             && (git checkout -q -f "${RBENV4CI_TAG}" \
+                 || (git fetch -q --jobs $(nproc) --unshallow \
+                     && git checkout -q -f "${RBENV4CI_TAG}")))) \
     && echo "Ignore git errors (if any) just above."
 
 RUN cd "${RBENV4CI_ROOT}/src" \
