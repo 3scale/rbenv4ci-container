@@ -74,7 +74,7 @@ RUN git clone --recurse-submodules --shallow-submodules --no-tags --jobs $(nproc
       --depth 1 --no-checkout --progress \
     https://github.com/unleashed/rbenv4ci.git "${RBENV4CI_ROOT}/src"
 
-ARG RBENV4CI_TAG=v0.2.0
+ARG RBENV4CI_TAG=v0.2.1
 RUN cd "${RBENV4CI_ROOT}/src" \
     && (git checkout -q -f "${RBENV4CI_TAG}" 2> /dev/null \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV4CI_TAG}" \
