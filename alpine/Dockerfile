@@ -76,7 +76,7 @@ RUN echo 'gem: --no-document' >> ~/.gemrc \
 ARG RBENV4CI_ROOT="/home/${USER_NAME}/.rbenv4ci"
 RUN git clone --recurse-submodules --shallow-submodules --no-tags --jobs $(nproc) \
       --depth 1 --no-checkout --progress \
-    https://github.com/unleashed/rbenv4ci.git "${RBENV4CI_ROOT}/src"
+    https://github.com/3scale/rbenv4ci.git "${RBENV4CI_ROOT}/src"
 
 ARG RBENV4CI_TAG=v0.2.1
 RUN cd "${RBENV4CI_ROOT}/src" \
