@@ -1,7 +1,7 @@
 # rbenv4ci-container
 
 This is a set of Dockerfiles including
-[rbenv4ci](https://github.com/unleashed/rbenv4ci).
+[rbenv4ci](https://github.com/3scale/rbenv4ci).
 
 ## License
 
