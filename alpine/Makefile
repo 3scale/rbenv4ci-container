@@ -12,6 +12,7 @@ build: export CONTAINER_USER ?= ruby
 build: export IMAGE_FULL_NAME := $(IMAGE_LOCATION)/$(IMAGE_NAME)
 build:
 	docker build --rm --build-arg USER_NAME=$(CONTAINER_USER) \
+		$(DOCKER_BUILD_EXTRA_ARGS) \
 		-t $(IMAGE_FULL_NAME):$(IMAGE_VERSION)-layered .
 	-docker rm dummy-export-$(IMAGE_NAME)-$(IMAGE_VERSION)
 	IMAGE_PATH=$$(docker run \
