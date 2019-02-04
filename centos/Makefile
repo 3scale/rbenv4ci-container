@@ -4,7 +4,7 @@ DISTRO_SUFFIX=-$(DISTRO)
 default: build
 
 .PHONY: build
-build: export IMAGE_LOCATION ?= quay.io/unleashed
+build: export IMAGE_LOCATION ?= quay.io/3scale
 build: export IMAGE_NAME ?= rbenv4ci-container
 build: export VERSION ?= $(shell git describe --dirty)
 build: export IMAGE_VERSION := $(VERSION)$(DISTRO_SUFFIX)
@@ -27,7 +27,7 @@ build:
 	docker rm dummy-export-$(IMAGE_NAME)-$(IMAGE_VERSION)
 
 .PHONY: destroy-layered
-destroy-layered: export IMAGE_LOCATION ?= quay.io/unleashed
+destroy-layered: export IMAGE_LOCATION ?= quay.io/3scale
 destroy-layered: export IMAGE_NAME ?= rbenv4ci-container
 destroy-layered: export VERSION ?= $(shell git describe --dirty)
 destroy-layered: export IMAGE_VERSION := $(VERSION)$(DISTRO_SUFFIX)
@@ -36,7 +36,7 @@ destroy-layered:
 	-docker rmi $(IMAGE_FULL_NAME):$(IMAGE_VERSION)-layered
 
 .PHONY: destroy
-destroy: export IMAGE_LOCATION ?= quay.io/unleashed
+destroy: export IMAGE_LOCATION ?= quay.io/3scale
 destroy: export IMAGE_NAME ?= rbenv4ci-container
 destroy: export VERSION ?= $(shell git describe --dirty)
 destroy: export IMAGE_VERSION := $(VERSION)$(DISTRO_SUFFIX)
