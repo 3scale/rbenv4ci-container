@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.9
 MAINTAINER Alejandro Martinez Ruiz <amr@redhat.com>
 
 ARG BASE_TOOLS="git openssh-client tar gzip ca-certificates"
