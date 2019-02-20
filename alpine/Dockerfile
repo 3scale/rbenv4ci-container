@@ -35,7 +35,7 @@ RUN git clone --recurse-submodules --shallow-submodules --no-tags --jobs $(nproc
       --depth 1 --no-checkout --progress \
     https://github.com/rbenv/ruby-build.git "${RBENV_RUBYBUILD_ROOT}"
 
-ARG RBENV_TAG=1c772d5ff21bbee52e0c6cdf128c5cffaf8feea8
+ARG RBENV_TAG=483e7f9bdf618ad25af6cab566982e1165274d99
 RUN cd "${RBENV_ROOT}" \
     && (git checkout -q -f "${RBENV_TAG}" 2> /dev/null \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV_TAG}" \
@@ -46,7 +46,7 @@ RUN cd "${RBENV_ROOT}" \
                      && git checkout -q -f "${RBENV_TAG}")))) \
     && echo "Ignore git errors (if any) just above."
 
-ARG RBENV_RUBYBUILD_TAG=v20180601
+ARG RBENV_RUBYBUILD_TAG=v20190130
 RUN cd "${RBENV_RUBYBUILD_ROOT}" \
     && (git checkout -q -f "${RBENV_RUBYBUILD_TAG}" 2> /dev/null \
     || ((git fetch -q --jobs $(nproc) --prune --depth 1 origin tag "${RBENV_RUBYBUILD_TAG}" \
